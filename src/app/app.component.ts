@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {YoutubeService} from './services/youtube/youtube.service';
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ngtube';
+  title = 'NGTube';
+
+
+  constructor(public yt: YoutubeService) {
+
+
+  }
+
+
 }

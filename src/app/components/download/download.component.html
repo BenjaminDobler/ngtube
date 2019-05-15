@@ -1,0 +1,17 @@
+<div class="info">
+  <div class="thumbnail" [style.backgroundImage]="'url('+download.info.thumbnail_url+')'"></div>
+  <span (click)="expanded = !expanded">{{download.info.title}}</span>
+  <button mat-mini-fab (click)="downloadDefault()">
+    <mat-icon aria-label="Example icon-button with a heart icon">arrow_downward</mat-icon>
+  </button>
+</div>
+
+<ng-container *ngIf="expanded">
+  <div class="formats" *ngFor="let format of download.info.formats">{{format.type}} Container: {{format.container}}
+    <span *ngIf="format.audioEncoding && !format.encoding">Audio Only</span>
+    <span *ngIf="format.encoding && !format.audioEncoding">Video Only {{format.resolution}}</span>
+    <span *ngIf="format.encoding && format.audioEncoding">Video & Audio {{format.resolution}}</span>
+    <span *ngIf="format.$download && format.$download | async as download">Progress: {{download.progress }}</span>
+    <button (click)="download.download(format)">Download</button>
+  </div>
+</ng-container>

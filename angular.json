@@ -27,6 +27,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -87,6 +88,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -116,8 +118,57 @@
               "devServerTarget": "ngtube:serve:production"
             }
           }
+        },
+        "build-electron": {
+          "builder": "@richapps/ngtron:build",
+          "options": {
+            "browserTarget": "ngtube:build",
+            "electronMain": "src/electron.ts"
+          }
+        },
+        "package-electron": {
+          "builder": "@richapps/ngtron:package",
+          "options": {
+            "browserTarget": "ngtube:build",
+            "electronMain": "src/electron.ts",
+            "electronPackage": {
+              "version": "0.0.0",
+              "name": "ngtube",
+              "main": "electron.js",
+              "dependencies": {
+                "ffmpeg-static-electron": "^2.0.1",
+                "fluent-ffmpeg": "^2.1.2",
+                "ytdl-core": "^0.29.1",
+                "filenamify": "^4.0.0"
+              }
+            },
+            "packagerConfig": {
+              "mac": [
+                "zip",
+                "dmg"
+              ],
+              "config": {
+                "appId": "some.id",
+                "npmRebuild": false,
+                "asar": false,
+                "directories": {
+                  "app": "dist/ngtube",
+                  "output": "dist/ngtube-electron",
+                  "buildResources": "/electronResources"
+                },
+                "electronVersion": "4.0.0"
+              }
+            }
+          }
+        },
+        "serve-electron": {
+          "builder": "@richapps/ngtron:serve",
+          "options": {
+            "browserTarget": "ngtube:build"
+          }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "ngtube"
 }
