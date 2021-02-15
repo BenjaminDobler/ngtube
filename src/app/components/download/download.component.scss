@@ -19,9 +19,16 @@
 }
 
 .thumbnail {
-  width: 60px;
-  height: 60px;
+  width: 168px;
+  height: 94px;
   border-radius: 5px;
   background-size: cover;
+  flex-shrink: 0;
 
+}
+
+.title {
+  flex-grow: 1;
+  margin-left: 10px;
+  margin-right: 10px;
 }

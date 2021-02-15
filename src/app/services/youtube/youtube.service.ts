@@ -42,10 +42,11 @@ export class YoutubeService {
 
   async download(url) {
     const info = await ytdl.getInfo(url);
+    
     const download: YoutubeDownload = new YoutubeDownload(info, url);
     download.change.subscribe(() => {
       // console.log('save!');
-      this.save();
+      //this.save();
     });
     this.downloads.push(download);
     this.save();
@@ -66,8 +67,8 @@ export class YoutubeService {
       infos.forEach((info) => {
         const download: YoutubeDownload = new YoutubeDownload(info, info.url);
         download.change.subscribe(() => {
-          // console.log('save!');
-          this.save();
+          //console.log('save!');
+          // this.save();
         });
         this.downloads.push(download);
       });
