@@ -1,0 +1,47 @@
+<div class="info">
+  <div
+    class="thumbnail"
+    [style.backgroundImage]="
+      'url(' + download.info.videoDetails.thumbnails[0].url + ')'
+    "
+  ></div>
+  <div class="title">
+    <span (click)="expanded = !expanded">{{
+      download.info.videoDetails.title
+    }}</span>
+  </div>
+  <button mat-mini-fab (click)="downloadDefault()">Download</button>
+  <button (click)="delete.emit()">Delete</button>
+  <button (click)="download.refresh()">Refresh</button>
+
+  <select>
+    <option *ngFor="let format of download.info.formats">
+      {{ format.mimeType }}
+    </option>
+  </select>
+</div>
+
+<ng-container *ngIf="expanded">
+  <div class="formats" *ngFor="let format of download.info.formats">
+    <ng-container *ngIf="true || (format.hasAudio && format.hasVideo)">
+      <button *ngIf="!format.downloaded" (click)="download.download(format)">
+        Download
+      </button>
+      <button *ngIf="format.downloaded" (click)="download.open(format)">
+        Open
+      </button>
+      {{ format.qualityLabel }}
+      {{ format.container }}
+      <span *ngIf="!format.hasVideo">Audio Only</span>
+      <span *ngIf="!format.hasAudio">Video Only {{ format.resolution }}</span>
+      <span *ngIf="format.hasAudio && format.hasVideo"
+        >Video & Audio {{ format.resolution }}</span
+      >
+      <ng-container *ngIf="format.$download | async as activeDownload">
+        Progress: {{ activeDownload.progress }}% -
+        {{ activeDownload.loaded | filesize }} /
+        {{ activeDownload.total | filesize }}
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>

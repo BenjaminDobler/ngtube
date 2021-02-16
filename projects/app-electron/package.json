@@ -1,0 +1,12 @@
+{
+  "version": "0.0.0",
+  "name": "myapp",
+  "main": "",
+  "dependencies": {
+    "ffmpeg-static-electron": "2.0.1",
+    "filenamify": "4.2.0",
+    "fluent-ffmpeg": "2.1.2",
+    "fs-extra": "^9.1.0",
+    "ytdl-core": "^4.4.5"
+  }
+}
