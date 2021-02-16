@@ -271,7 +271,8 @@ export class YoutubeDownload {
       map((d: any) => {
         console.log("ddd ", d);
 
-        const unfinished = d.find((x) => x.type !== "FINISH");
+        const unfinished = d.find((x) => (x.type !== "FINISH" && x.state !== "DOWNLOADED"));
+        console.log('unfinished ', unfinished);
         if (unfinished) {
           return false;
         } else {
@@ -307,6 +308,7 @@ export class YoutubeDownload {
     );
 
     done.subscribe(() => {
+      console.log('download done!');
       ffmpeg()
         .input(videoOutput)
         .videoCodec("copy")
@@ -315,7 +317,7 @@ export class YoutubeDownload {
         .save(mergedOutput)
         .on("error", console.error)
         .on("progress", (progress) => {
-          // console.log("Progress ", progress);
+          console.log("Merge Progress ", progress);
         })
         .on("end", async () => {
           // await this.unlink(audioOutput);
