@@ -66,6 +66,21 @@ export class YoutubeDownload {
     this.info.url = url;
   }
 
+  exportAsMp3(format) {
+    const formatIndex = this.info.formats.indexOf(format);
+    const title = this.info.title || this.info.videoDetails.title;
+
+    let filePath = join(
+      downloadDir,
+      filenameify(title) + "_" + formatIndex + "." + format.container
+    );
+
+    ffmpeg(filePath)
+      .format("mp3")
+      .save(filePath + ".mp3")
+      .on("error", console.error);
+  }
+
   open(format: any) {
     if (!format) {
       format = this.info.formats.find((x) => x.type === "HQ Audio & Video");
@@ -271,8 +286,10 @@ export class YoutubeDownload {
       map((d: any) => {
         console.log("ddd ", d);
 
-        const unfinished = d.find((x) => (x.type !== "FINISH" && x.state !== "DOWNLOADED"));
-        console.log('unfinished ', unfinished);
+        const unfinished = d.find(
+          (x) => x.type !== "FINISH" && x.state !== "DOWNLOADED"
+        );
+        console.log("unfinished ", unfinished);
         if (unfinished) {
           return false;
         } else {
@@ -308,7 +325,7 @@ export class YoutubeDownload {
     );
 
     done.subscribe(() => {
-      console.log('download done!');
+      console.log("download done!");
       ffmpeg()
         .input(videoOutput)
         .videoCodec("copy")
